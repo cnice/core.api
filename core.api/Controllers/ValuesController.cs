@@ -7,6 +7,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
 using core.api.ViewModels;
 using System.Collections.Generic;
+using Microsoft.AspNetCore.Authorization;
 
 namespace core.api.Controllers
 {
@@ -48,6 +49,23 @@ namespace core.api.Controllers
             return response;
         }
 
+        [HttpGet, Authorize]
+        [Route("GetUserContactInfo")]
+        public IActionResult GetUserContactInfo()
+        {
+            IActionResult response = Unauthorized();
+
+            var t = HttpContext.Request.Headers;
+
+            ContactInfo contactInfo = new ContactInfo{
+                Address = "188 Simple Ave",
+                State = "North Carolina",
+                ZipCode = 21822
+            };
+
+            return response = Ok(new { contactInfo });
+        }
+
         #region Private Methods
         private UserModel Authenticate(LoginModel login)
         {
@@ -75,7 +93,7 @@ namespace core.api.Controllers
             var token = new JwtSecurityToken(_config["Jwt:Issuer"],
               _config["Jwt:Issuer"],
               claims,
-              expires: DateTime.Now.AddMinutes(30),
+              expires: DateTime.Now.AddMinutes(10),
               signingCredentials: creds);
 
             return new JwtSecurityTokenHandler().WriteToken(token);
