@@ -6,7 +6,6 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
 using core.api.ViewModels;
-using System.Collections.Generic;
 using Microsoft.AspNetCore.Authorization;
 
 namespace core.api.Controllers
@@ -25,11 +24,10 @@ namespace core.api.Controllers
         }
         #endregion
 
-        // GET api/values
         [HttpGet]
-        public IEnumerable<string> Get()
+        public string Get()
         {
-            return new string[] { "Wecome!" };
+           return "Welcome";
         }
 
         // POST api/values
@@ -54,8 +52,6 @@ namespace core.api.Controllers
         public IActionResult GetUserContactInfo()
         {
             IActionResult response = Unauthorized();
-
-            var t = HttpContext.Request.Headers;
 
             ContactInfo contactInfo = new ContactInfo{
                 Address = "188 Simple Ave",
@@ -98,7 +94,6 @@ namespace core.api.Controllers
 
             return new JwtSecurityTokenHandler().WriteToken(token);
         }
-        #endregion
-       
+        #endregion    
     }
 }

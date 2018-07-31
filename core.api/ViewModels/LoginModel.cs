@@ -1,11 +1,8 @@
-﻿using System;
-namespace core.api.ViewModels
+﻿namespace core.api.ViewModels
 {
     public class LoginModel
     {
         public string Username { get; set; }
         public string Password { get; set; }
-
-        public LoginModel() { }
     }
 }
